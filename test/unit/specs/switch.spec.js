@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import Switch from '@/components/switch'
+import Switch from '@/switch'
 import { horizontalDrag } from '../utils'
 
 const THUMB_STROKE = 20
@@ -111,8 +111,10 @@ describe('switch', () => {
   test('watch currentValue', () => {
     wrapper = mount(Switch, {
       attachToDocument: true,
-      data: {
-        currentValue: false
+      data: function () {
+        return {
+          currentValue: false
+        }
       }
     })
 

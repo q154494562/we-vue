@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Input from '@/components/input'
+import Input from '@/input'
 
 describe('input', () => {
   let wrapper
@@ -113,7 +113,7 @@ describe('input', () => {
     })
 
     // set the validate method
-    wrapper.setMethods({'validate': mockValidateMethod})
+    wrapper.setMethods({ 'validate': mockValidateMethod })
 
     wrapper.find('input').trigger('focus')
 
@@ -147,7 +147,7 @@ describe('input', () => {
     })
 
     // set the validate method
-    wrapper.setMethods({'validate': mockValidateMethod})
+    wrapper.setMethods({ 'validate': mockValidateMethod })
 
     wrapper.find('input').trigger('blur')
 
@@ -181,7 +181,7 @@ describe('input', () => {
     })
 
     // set the validate method
-    wrapper.setMethods({'validate': mockValidateMethod})
+    wrapper.setMethods({ 'validate': mockValidateMethod })
 
     wrapper.find('input').trigger('change')
 

@@ -1,6 +1,9 @@
 import { shallowMount } from '@vue/test-utils'
-import ToastApi from '@/components/toast'
-import Toast from '@/components/toast/toast.vue'
+import ToastApi from '@/toast'
+import Toast from '@/toast/toast.vue'
+import { later, transitionStub } from '../utils'
+
+// transitionStub()
 
 describe('toast api', () => {
   beforeEach(() => {
@@ -64,6 +67,45 @@ describe('toast api', () => {
     expect(document.querySelector('.weui-toast')).toBeTruthy()
     expect(instance.type).toBe('loading')
   })
+
+  test('setDefaultOptions method', () => {
+    ToastApi.setDefaultOptions({
+      duration: 1000
+    })
+
+    expect(ToastApi.currentOptions.duration).toBe(1000)
+  })
+
+  test('resetDefaultOptions method', () => {
+    ToastApi.setDefaultOptions({
+      duration: 1000
+    })
+
+    ToastApi.resetDefaultOptions()
+
+    expect(ToastApi.currentOptions).toEqual(ToastApi.defaultOptions)
+  })
+
+  // TODO
+  // test('multiple toast', async () => {
+  //   ToastApi.allowMultiple()
+  //   // close all
+  //   ToastApi.close(true)
+  //
+  //   // await later(500)
+  //
+  //   const toast1 = ToastApi.success('1')
+  //   const toast2 = ToastApi.success('2')
+  //   ToastApi.close()
+  //   // await later(500)
+  //   expect(toast1.visible).toBeFalsy()
+  //   expect(toast2.visible).toBeTruthy()
+  //   ToastApi.close()
+  //   ToastApi.close()
+  //   // await later(500)
+  //   expect(toast2.visible).toBeFalsy()
+  //   ToastApi.allowMultiple(false)
+  // })
 })
 
 describe('toast', () => {

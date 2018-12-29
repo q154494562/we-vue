@@ -5,12 +5,21 @@
 const execa = require('execa')
 const inquirer = require('inquirer')
 const Listr = require('listr')
+const currentBranch = require('git-branch').sync()
 
 const release = function (version) {
   const tasks = new Listr([
     {
+      title: 'Check current branch',
+      task: () => {
+        if (currentBranch !== 'master') {
+          throw Error('is not on the master branch')
+        }
+      }
+    },
+    {
       title: 'Build release.',
-      task: () => execa.shell('npm run build:release')
+      task: () => execa.shell('npm run build:lib')
     },
     {
       title: 'Git',
@@ -72,7 +81,7 @@ async function enterAndConfirmVersion () {
     message: '[we-vue] Enter release version:',
     validate: function(value) {
       const pass = value.match(
-        /^1|2\.\d\.\d+(\-(alpha|beta)\.\d+)?$/
+        /^2|3\.\d\.\d+(\-(alpha|beta)\.\d+)?$/
       )
       if (pass) {
         return true

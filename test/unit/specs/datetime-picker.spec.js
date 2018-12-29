@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import DatetimePicker from '@/components/datetime-picker'
+import DatetimePicker from '@/datetime-picker'
 import { slowVerticalDrag } from '../utils'
 
 const testTime = '12:00'
@@ -65,29 +65,8 @@ describe('datetime-picker', () => {
     })
   })
 
-  test('test isLeapyear method', () => {
-    wrapper = mount(DatetimePicker, {
-      propsData: {}
-    })
-
-    expect(wrapper.vm.isLeapYear(2012)).toBe(true)
-    expect(wrapper.vm.isLeapYear(2000)).toBe(true)
-    expect(wrapper.vm.isLeapYear(2001)).toBe(false)
-  })
-
-  test('test isShortMonth method', () => {
-    wrapper = mount(DatetimePicker, {
-      propsData: {}
-    })
-
-    expect(wrapper.vm.isShortMonth(4)).toBe(true)
-    expect(wrapper.vm.isShortMonth(1)).toBe(false)
-  })
-
   test('test getMonthEndDay method', () => {
-    wrapper = mount(DatetimePicker, {
-      propsData: {}
-    })
+    wrapper = mount(DatetimePicker)
 
     expect(wrapper.vm.getMonthEndDay(2018, 1)).toBe(31)
     expect(wrapper.vm.getMonthEndDay(2016, 1)).toBe(31)
@@ -98,9 +77,7 @@ describe('datetime-picker', () => {
   })
 
   test('test getTrueValue method', () => {
-    wrapper = mount(DatetimePicker, {
-      propsData: {}
-    })
+    wrapper = mount(DatetimePicker)
 
     expect(wrapper.vm.getTrueValue()).toBe(undefined)
     expect(wrapper.vm.getTrueValue('1')).toBe(1)
@@ -175,8 +152,9 @@ describe('datetime-picker', () => {
     await slowVerticalDrag(hourColumn, 0, 34 * 24)
     await slowVerticalDrag(minuteColumn, 0, 34 * 10)
     expect(wrapper.vm.currentValue).toEqual('0:00')
-  }, 15000)
+  })
 
+  // TODO:
   test('drag datetime picker', async () => {
     wrapper = mount(DatetimePicker, {
       attachToDocument: true,
@@ -203,8 +181,9 @@ describe('datetime-picker', () => {
     expect(wrapper.vm.currentValue.getDate()).toBe(testDate.getDate() + 1)
     expect(wrapper.vm.currentValue.getHours()).toBe(testDate.getHours() + 1)
     expect(wrapper.vm.currentValue.getMinutes()).toBe(testDate.getMinutes() + 1)
-  }, 15000)
+  })
 
+  // TODO:
   test('drag date picker', async () => {
     wrapper = mount(DatetimePicker, {
       attachToDocument: true,
@@ -227,7 +206,7 @@ describe('datetime-picker', () => {
     expect(wrapper.vm.currentValue.getFullYear()).toEqual(testDate.getFullYear() + 1)
     expect(wrapper.vm.currentValue.getMonth()).toEqual(testDate.getMonth() + 1)
     expect(wrapper.vm.currentValue.getDate()).toEqual(testDate.getDate() + 1)
-  }, 10000)
+  })
 
   test('watch value change', () => {
     wrapper = mount(DatetimePicker, {

@@ -1,5 +1,5 @@
 import { shallowMount, mount } from '@vue/test-utils'
-import CellSwipe from '@/components/cell-swipe'
+import CellSwipe from '@/cell-swipe'
 import CellSwipeButtonComponent from '../components/cell-swipe-button'
 import { horizontalDrag } from '../utils'
 
@@ -42,7 +42,7 @@ describe('cell-swipe', () => {
       }
     })
 
-    horizontalDrag(wrapper.find({ref: 'cellBd'}), 0, -getRightBtnsWidth())
+    horizontalDrag(wrapper.find({ ref: 'cellBd' }), 0, -getRightBtnsWidth())
 
     expect(wrapper.vm.offset).toBe(-getRightBtnsWidth())
   })
@@ -55,7 +55,7 @@ describe('cell-swipe', () => {
       }
     })
 
-    horizontalDrag(wrapper.find({ref: 'cellBd'}), 0, -10)
+    horizontalDrag(wrapper.find({ ref: 'cellBd' }), 0, -10)
 
     expect(wrapper.vm.offset).toBe(0)
   })
@@ -68,7 +68,7 @@ describe('cell-swipe', () => {
       }
     })
 
-    horizontalDrag(wrapper.find({ref: 'cellBd'}), 0, -(getRightBtnsWidth() + 20))
+    horizontalDrag(wrapper.find({ ref: 'cellBd' }), 0, -(getRightBtnsWidth() + 20))
 
     expect(wrapper.vm.offset).toBe(-getRightBtnsWidth())
   })
@@ -86,7 +86,7 @@ describe('cell-swipe', () => {
       offset: -getRightBtnsWidth()
     })
 
-    horizontalDrag(wrapper.find({ref: 'cellBd'}), 0, getRightBtnsWidth())
+    horizontalDrag(wrapper.find({ ref: 'cellBd' }), 0, getRightBtnsWidth())
 
     expect(wrapper.vm.offset).toBe(0)
   })
@@ -104,7 +104,7 @@ describe('cell-swipe', () => {
       offset: -getRightBtnsWidth()
     })
 
-    horizontalDrag(wrapper.find({ref: 'cellBd'}), 0, 10)
+    horizontalDrag(wrapper.find({ ref: 'cellBd' }), 0, 10)
 
     expect(wrapper.vm.offset).toBe(-getRightBtnsWidth())
   })
@@ -122,7 +122,7 @@ describe('cell-swipe', () => {
       offset: -getRightBtnsWidth()
     })
 
-    horizontalDrag(wrapper.find({ref: 'cellBd'}), 0, getRightBtnsWidth() + 10)
+    horizontalDrag(wrapper.find({ ref: 'cellBd' }), 0, getRightBtnsWidth() + 10)
 
     expect(wrapper.vm.offset).toBe(0)
   })
@@ -134,8 +134,10 @@ describe('cell-swipe', () => {
 
     const anOtherWrapper = mount(CellSwipe, {
       attachToDocument: true,
-      data: {
-        offset: 10
+      data: function () {
+        return {
+          offset: 10
+        }
       }
     })
 

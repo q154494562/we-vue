@@ -1,25 +1,28 @@
-import { shallowMount } from '@vue/test-utils'
-import DialogApi from '@/components/dialog'
-import Dialog from '@/components/dialog/dialog.vue'
+import { mount } from '@vue/test-utils'
+import DialogApi from '@/dialog'
+import Dialog from '@/dialog/dialog'
+import { later } from '../utils'
 
 describe('test dialog api', () => {
   afterEach(() => {
     DialogApi.close()
   })
 
-  test('create a dialog', () => {
-    const callbackSpy = jest.fn()
+  test('create a dialog', async () => {
+    const callback = jest.fn()
+
+    DialogApi.close()
 
     DialogApi({
       title: 'title',
       message: 'test message',
       skin: 'ios',
       showCancelBtn: true
-    }, callbackSpy)
+    }, callback)
 
-    setTimeout(() => {
-      expect(document.querySelector('.weui-dialog')).toBeTruthy()
-    }, 300)
+    await later()
+
+    expect(document.querySelector('.weui-dialog')).toBeTruthy()
   })
 
   test('open an alert dialog', () => {
@@ -59,16 +62,35 @@ describe('test dialog api', () => {
     expect(document.querySelector('.weui-dialog')).toBeTruthy()
     document.querySelector('.weui-dialog__ft>.weui-dialog__btn_primary').click()
   })
+
+  test('setDefaultOptions method', () => {
+    DialogApi.setDefaultOptions({
+      duration: 1000
+    })
+
+    expect(DialogApi.currentOptions.duration).toBe(1000)
+  })
+
+  test('resetDefaultOptions method', () => {
+    DialogApi.setDefaultOptions({
+      duration: 1000
+    })
+
+    DialogApi.resetDefaultOptions()
+
+    expect(DialogApi.currentOptions).toEqual(DialogApi.defaultOptions)
+  })
 })
 
 describe('dialog component', () => {
   let wrapper
+
   afterEach(() => {
     wrapper && wrapper.destroy()
   })
 
   test('create', () => {
-    wrapper = shallowMount(Dialog, {
+    wrapper = mount(Dialog, {
       propsData: {}
     })
 
@@ -77,34 +99,34 @@ describe('dialog component', () => {
   })
 
   test('click cancel button', () => {
-    const callbackSpy = jest.fn()
+    const callback = jest.fn()
 
-    wrapper = shallowMount(Dialog, {
+    wrapper = mount(Dialog, {
       propsData: {
         'visible.sync': true,
-        callback: callbackSpy
+        callback: callback
       }
     })
 
     wrapper.findAll('.weui-dialog__btn').at(0).trigger('click')
     expect(wrapper.vm.visible).toBe(false)
     expect(wrapper.emitted().cancel).toBeTruthy()
-    expect(callbackSpy).toHaveBeenCalled()
+    expect(callback).toHaveBeenCalled()
   })
 
   test('click confirm button', () => {
-    const callbackSpy = jest.fn()
+    const callback = jest.fn()
 
-    wrapper = shallowMount(Dialog, {
+    wrapper = mount(Dialog, {
       propsData: {
         'visible.sync': true,
-        callback: callbackSpy
+        callback: callback
       }
     })
 
     wrapper.findAll('.weui-dialog__btn').at(1).trigger('click')
     expect(wrapper.vm.visible).toBe(false)
     expect(wrapper.emitted().confirm).toBeTruthy()
-    expect(callbackSpy).toHaveBeenCalled()
+    expect(callback).toHaveBeenCalled()
   })
 })

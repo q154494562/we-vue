@@ -11,13 +11,13 @@
       class="list-item"
       v-for="(item, index) in list"
       :key="index"
-    >{{ item.id }}
-    </div>
+      v-text="item.id"
+    />
   </div>
 </template>
 
 <script>
-import InfiniteScroll from '@/components/infinite-scroll'
+import InfiniteScroll from '@/infinite-scroll'
 
 export default {
   directives: {
@@ -25,7 +25,6 @@ export default {
   },
 
   props: {
-    list: Array,
     disabled: Boolean,
     distance: Number,
     immediateCheck: {
@@ -39,6 +38,12 @@ export default {
       }
     },
     hidden: Boolean
+  },
+
+  data () {
+    return {
+      list: []
+    }
   },
 
   methods: {
