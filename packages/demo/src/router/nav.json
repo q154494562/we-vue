@@ -1,0 +1,217 @@
+[
+  {
+    "groupTitle": "基础组件",
+    "navItems": [
+      {
+        "path": "/badge",
+        "name": "Badge",
+        "description": "小徽章"
+      },
+      {
+        "path": "/circle",
+        "name": "Circle",
+        "description": "圆环进度指示"
+      },
+      {
+        "path": "/icons",
+        "name": "Icons",
+        "description": "图标"
+      },
+      {
+        "path": "/lazyload",
+        "name": "Lazyload",
+        "description": "懒加载"
+      },
+      {
+        "path": "/progress",
+        "name": "Progress",
+        "description": "进度条"
+      },
+      {
+        "path": "/slider",
+        "name": "Slider",
+        "description": "滑块"
+      },
+      {
+        "path": "/spinner",
+        "name": "Spinner",
+        "description": "加载动画"
+      },
+      {
+        "path": "/swipe",
+        "name": "Swipe",
+        "description": "轮播"
+      }
+    ]
+  },
+  {
+    "groupTitle": "表单",
+    "navItems": [
+      {
+        "path": "/button",
+        "name": "Button",
+        "description": "按钮"
+      },
+      {
+        "path": "/checklist",
+        "name": "Checklist",
+        "description": "多选列表"
+      },
+      {
+        "path": "/input",
+        "name": "Input",
+        "description": "输入框"
+      },
+      {
+        "path": "/number-spinner",
+        "name": "NumberSpinner",
+        "description": "数字输入框"
+      },
+      {
+        "path": "/radio",
+        "name": "Radio",
+        "description": "单选"
+      },
+      {
+        "path": "/switch",
+        "name": "Switch",
+        "description": "开关"
+      },
+      {
+        "path": "/switch-cell",
+        "name": "SwitchCell",
+        "description": "开关列表"
+      },
+      {
+        "path": "/textarea",
+        "name": "Textarea",
+        "description": "文本框"
+      },
+      {
+        "path": "/form-preview",
+        "name": "FormPreview",
+        "description": "表单预览"
+      }
+    ]
+  },
+  {
+    "groupTitle": "操作反馈",
+    "navItems": [
+      {
+        "path": "/actionsheet",
+        "name": "ActionSheet",
+        "description": "弹出式菜单"
+      },
+      {
+        "path": "/area-picker",
+        "name": "AreaPicker",
+        "description": "省市区选择"
+      },
+      {
+        "path": "/dialog",
+        "name": "Dialog",
+        "description": "对话框"
+      },
+      {
+        "path": "/toast",
+        "name": "Toast",
+        "description": "弹出式提示"
+      },
+      {
+        "path": "/top-tips",
+        "name": "TopTips",
+        "description": "顶部提示条"
+      },
+      {
+        "path": "/picker",
+        "name": "Picker",
+        "description": "选择器"
+      },
+      {
+        "path": "/datetime-picker",
+        "name": "DatetimePicker",
+        "description": "时间日期选择器"
+      },
+      {
+        "path": "/infinite-scroll",
+        "name": "InfiniteScroll",
+        "description": "无限滚动加载"
+      }
+    ]
+  },
+  {
+    "groupTitle": "导航相关",
+    "navItems": [
+      {
+        "path": "/header",
+        "name": "Header",
+        "description": "头部标题栏"
+      },
+      {
+        "path": "/tabs",
+        "name": "Tabs",
+        "description": "选项卡"
+      },
+      {
+        "path": "/tabbar",
+        "name": "Tabbar",
+        "description": "导航菜单"
+      }
+    ]
+  },
+  {
+    "groupTitle": "搜索相关",
+    "navItems": [
+      {
+        "path": "/search-bar",
+        "name": "SearchBar",
+        "description": "搜索框"
+      }
+    ]
+  },
+  {
+    "groupTitle": "布局",
+    "navItems": [
+      {
+        "path": "/cell",
+        "name": "Cell",
+        "description": "列表"
+      },
+      {
+        "path": "/swipe-cell",
+        "name": "SwipeCell",
+        "description": "滑动列表"
+      },
+      {
+        "path": "/flex",
+        "name": "Flex",
+        "description": "Flex 布局"
+      },
+      {
+        "path": "/footer",
+        "name": "Footer",
+        "description": "页脚"
+      },
+      {
+        "path": "/grid",
+        "name": "Grid",
+        "description": "九宫格"
+      },
+      {
+        "path": "/loadmore",
+        "name": "Loadmore",
+        "description": "加载更多"
+      },
+      {
+        "path": "/panel",
+        "name": "Panel",
+        "description": "面板"
+      },
+      {
+        "path": "/popup",
+        "name": "Popup",
+        "description": "弹出层"
+      }
+    ]
+  }
+]

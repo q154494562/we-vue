@@ -1,0 +1,45 @@
+@import "./base/fn";
+
+$wv-swipe-indicator: 6px;
+
+.wv-swipe {
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+
+  &__wrapper {
+    height: 100%;
+  }
+
+  &__indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    height: $wv-swipe-indicator;
+    transform: translate3d(-50%, 0, 0);
+
+    > i {
+      display: inline-block;
+      width: $wv-swipe-indicator;
+      height: $wv-swipe-indicator;
+      vertical-align: top;
+      background-color: gray;
+      border-radius: 100%;
+
+      &:not(:last-child) {
+        margin-right: $wv-swipe-indicator;
+      }
+    }
+
+    .wv-swipe__indicator {
+      &--active {
+        background-color: white;
+      }
+    }
+  }
+}
+
+.wv-swipe-item {
+  float: left;
+  height: 100%;
+}

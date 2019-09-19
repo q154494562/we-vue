@@ -1,0 +1,10 @@
+.DS_Store
+node_modules/
+
+# Built files
+/dist/
+/es5/
+/lib/
+/lib-temp/
+
+/test/unit/coverage/

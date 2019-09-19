@@ -1,152 +1,174 @@
 version: 2
-jobs:
-  build:
-    docker:
-      - image: circleci/node:8.11.4-browsers
 
-    working_directory: ~/we-vue
+defaults: &defaults
+  working_directory: ~/we-vue
+  docker:
+    - image: circleci/node:10.15.3-browsers-legacy
+
+jobs:
+  # ----------------------------------------------------------
+  # Phase 1: Setup
+  # ----------------------------------------------------------
+  setup:
+    <<: *defaults
+    steps:
+      # Checkout repository
+      - checkout
+
+      # Restore cache
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - yarn-packages-{{ .Branch }}-
+
+      - run:
+          name: isntall lerna and codecov globally
+          command: sudo npm install -g lerna codecov
+
+      # Install dependencies
+      - run:
+          name: Install Dependencies
+          command: yarn --no-lockfile --frozen-lockfile --non-interactive
+
+      # Save cache
+      - save_cache:
+          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+            - packages/*/node_modules
+
+      # Persist workspace
+      - persist_to_workspace:
+          root: ~/we-vue
+          paths:
+            - node_modules
+            - packages/*/node_modulels
+            - packages/*/dist
+
+  # ----------------------------------------------------------
+  # Phase 2: Test lib and update coverage result
+  # ----------------------------------------------------------
+  test-lib:
+    <<: *defaults
 
     steps:
       - checkout
 
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: yarn install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
-      # run tests!
-      - run: yarn test -- --coverage
-
-      # update codecov stats
-      - run: ./node_modules/.bin/codecov
-
-      # build demo
-      - run: yarn build:demo
-
-      # build docs
-      - run: yarn build:docs
-
-      - persist_to_workspace:
-          root: ./
-          paths:
-            - dist
-            - docs-dist
-
-  # build docs-site, do NOT run unit test and code coverage
-  build_docs:
-      docker:
-        - image: circleci/node:7.10-browsers
-
-      working_directory: ~/we-vue
-
-      steps:
-        - checkout
-
-        - restore_cache:
-            keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-        - run: yarn install
-
-        - save_cache:
-            paths:
-              - node_modules
-            key: v1-dependencies-{{ checksum "package.json" }}
-
-        # build docs
-        - run: yarn build:docs
-
-        - persist_to_workspace:
-            root: ./
-            paths:
-              - docs-dist
-
-  deploy:
-    docker:
-      - image: circleci/ubuntu-server
-
-    steps:
       - attach_workspace:
           at: ~/we-vue
 
+      # test packages/we-vue
+      - run: yarn run test:ci
+
+      # update codecov stats
+      - run: yarn lerna run coverage --scope we-vue --stream
+
+  # ----------------------------------------------------------
+  # Phase 3: Build and deploy demo
+  # ----------------------------------------------------------
+  build-deploy-demo:
+    <<: *defaults
+
+    steps:
+      - checkout
+
       - add_ssh_keys:
           fingerprints:
-            - "6f:b8:91:11:81:42:a3:9c:24:17:cf:be:e9:0b:41:67"
+            - "6a:aa:77:77:28:51:9f:01:4b:b2:7e:3e:ea:f6:20:1a"
 
       - run: echo -e "Host $DEPLOY_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
+      # Install rsync
+      - run: sudo apt install rsync -y
+
+      - attach_workspace:
+          at: ~/we-vue
+
+      # build component lib and dist《because demo needs to import it)
+      - run: yarn lerna run build --scope we-vue --stream
+
+      # build demo
+      - run: yarn lerna run build --scope demo --stream
+
       # deploy demo
       - deploy:
+          name: Deploy Demo
           when: on_success
           command: |
-            rsync -vzrtopg --progress -e ssh --delete ~/we-vue/dist/* $DEPLOY_USER@$DEPLOY_HOST:/data/wwwroot/demo.wevue.org
+            rsync -vzrtopg --progress -e ssh --delete packages/demo/dist/* $DEPLOY_USER@$DEPLOY_HOST:/data/wwwroot/demo.wevue.org
+
+  # ----------------------------------------------------------
+  # Phase 3: Generate and deploy docs
+  # ----------------------------------------------------------
+  generate-deploy-docs:
+    <<: *defaults
+
+    steps:
+      - checkout
+
+      - add_ssh_keys:
+          fingerprints:
+            - "6a:aa:77:77:28:51:9f:01:4b:b2:7e:3e:ea:f6:20:1a"
+
+      - run: echo -e "Host $DEPLOY_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+
+      # Install rsync
+      - run: sudo apt install rsync -y
+
+      - attach_workspace:
+          at: ~/we-vue
+
+      # build demo and docs
+      - run: yarn lerna run generate --scope docs --stream
 
       # deploy docs
       - deploy:
+          name: Deploy Docs
           when: on_success
           command: |
-            rsync -vzrtopg --progress -e ssh --delete ~/we-vue/docs-dist/* $DEPLOY_USER@$DEPLOY_HOST:/data/wwwroot/wevue.org
-
-  deploy_docs:
-      docker:
-        - image: circleci/ubuntu-server
-
-      steps:
-        - attach_workspace:
-            at: ~/we-vue
-
-        - add_ssh_keys:
-            fingerprints:
-              - "6f:b8:91:11:81:42:a3:9c:24:17:cf:be:e9:0b:41:67"
-
-        - run: echo -e "Host $DEPLOY_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-
-        # deploy docs
-        - deploy:
-            when: on_success
-            command: |
-              rsync -vzrtopg --progress -e ssh --delete ~/we-vue/docs-dist/* $DEPLOY_USER@$DEPLOY_HOST:/data/wwwroot/wevue.org
+            rsync -vzrtopg --progress -e ssh --delete packages/docs/dist/* $DEPLOY_USER@$DEPLOY_HOST:/data/wwwroot/wevue.org
 
 workflows:
   version: 2
-  # on branch master, deploy both demo and docs-site
-  build_and_deploy:
+
+  # test lib and update codecove stats after commit to master branch.
+  lib-and-demo:
     jobs:
-      - build:
+      - setup:
           filters:
             branches:
               only:
                 - master
-      - deploy:
+      - test-lib:
           requires:
-            - build
+            - setup
+          filters:
+            branches:
+              only:
+                - master
+      - build-deploy-demo:
+          requires:
+            - test-lib
           filters:
             branches:
               only:
                 - master
 
-  # on branch docs, just deploy the docs-site
-  deploy_doc_site:
-      jobs:
-        - build_docs:
-            filters:
-              branches:
-                only:
-                  - docs
-        - deploy_docs:
-            requires:
-              - build_docs
-            filters:
-              branches:
-                only:
-                  - docs
+  # Generate docs and deploy it
+  docs:
+    jobs:
+      - setup:
+          filters:
+            branches:
+              only:
+                - master
+                - docs
+      - generate-deploy-docs:
+          requires:
+            - setup
+          filters:
+            branches:
+              only:
+                - master
+                - docs

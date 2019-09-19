@@ -1,0 +1,16 @@
+@import "./base/fn";
+
+.weui-swiped-btn {
+  display: block;
+  padding: $weui-cell-gap-v 1em;
+  color: inherit;
+  line-height: $weui-cell-line-height;
+}
+
+.weui-swiped-btn_default {
+  background-color: #c7c7cc;
+}
+
+.weui-swiped-btn_warn {
+  background-color: #ff3b30;
+}

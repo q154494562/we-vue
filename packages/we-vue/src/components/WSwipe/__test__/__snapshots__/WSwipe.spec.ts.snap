@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`swipe create 1`] = `
+<div class="wv-swipe">
+  <div class="wv-swipe__wrapper" style="width: 0px; transition-duration: 500ms; transform: translateX(0px);"></div>
+</div>
+`;

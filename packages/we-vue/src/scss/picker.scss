@@ -1,0 +1,121 @@
+@import "./base/fn";
+
+$pickerItemHeight: 34px;
+
+.weui-picker {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 5000;
+  width: 100%;
+  transform: none;
+  backface-visibility: hidden;
+  //slide up animation
+  transition: transform 0.3s;
+}
+
+.weui-picker__hd {
+  position: relative;
+  display: flex;
+  padding: 9px 15px;
+  font-size: 17px;
+  text-align: center;
+  background-color: #fff;
+
+  &::after {
+    @include setBottomLine($weui-line-color-light);
+  }
+}
+
+.weui-picker__action {
+  display: block;
+  flex: 1;
+  color: $weui-color-primary;
+
+  &:first-child {
+    color: #888;
+    text-align: left;
+  }
+
+  &:last-child {
+    text-align: right;
+  }
+}
+
+.weui-picker__bd {
+  position: relative;
+  display: flex;
+  height: 238px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.weui-picker__group {
+  position: relative;
+  flex: 1;
+  height: 100%;
+}
+
+.weui-picker__mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  background: linear-gradient(
+    180deg,
+    hsla(0, 0%, 100%, 0.95),
+    hsla(0, 0%, 100%, 0.6)
+  ),
+    linear-gradient(0deg, hsla(0, 0%, 100%, 0.95), hsla(0, 0%, 100%, 0.6));
+  background-repeat: no-repeat;
+  background-position: top, bottom;
+  background-size: 100% 102px;
+  transform: translateZ(0);
+  pointer-events: none; // IE 10 以上
+}
+
+.weui-picker__indicator {
+  position: absolute;
+  top: 102px;
+  left: 0;
+  z-index: 3;
+  width: 100%;
+  height: $pickerItemHeight;
+
+  &::before {
+    @include setTopLine($weui-line-color-light);
+  }
+
+  &::after {
+    @include setBottomLine($weui-line-color-light);
+  }
+}
+
+.weui-picker__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.weui-picker__item {
+  height: $pickerItemHeight;
+  padding: 0;
+  overflow: hidden;
+  color: #000;
+  line-height: $pickerItemHeight;
+  white-space: nowrap;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+.weui-picker__item_disabled {
+  color: $weui-text-color-gray;
+}
+
+.wv-picker-column-divider {
+  transform: translate3d(0, 106px, 0);
+}

@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`switch create 1`] = `
+<div class="wv-switch">
+  <div class="background"></div>
+  <div class="thumb" style="transform: translate3d(0px, 0, 0);"></div>
+</div>
+`;

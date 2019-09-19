@@ -1,0 +1,8 @@
+/node_modules/
+/build/
+/dist/
+/es5
+/lib
+/lib-temp
+/*.js
+/test/unit/coverage/

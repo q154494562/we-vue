@@ -1,0 +1,39 @@
+@import "./base/fn";
+
+$headerHeight: 50px;
+
+.wv-header {
+  position: relative;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: $headerHeight;
+  margin: 0;
+  padding: 0 10px;
+  color: white;
+  line-height: 1;
+  white-space: nowrap;
+
+  .left {
+    display: block;
+    float: left;
+    overflow: hidden;
+    font-weight: 100;
+    font-size: 35px;
+    line-height: 35px;
+  }
+
+  .wv-header-title {
+    flex: 1;
+    font-size: 23px;
+    text-align: center;
+  }
+
+  &.is-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+}

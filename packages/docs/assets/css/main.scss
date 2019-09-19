@@ -1,0 +1,243 @@
+@import "~normalize.css/normalize.css";
+@import "~prism-themes/themes/prism-atom-dark.css";
+@import "~github-markdown-css/github-markdown.css";
+
+// iconfont 图标
+// 项目地址：https://www.iconfont.cn/manage/index?manage_type=myprojects&projectId=223763
+@import url("//at.alicdn.com/t/font_223763_wve2zq2w8tp.css");
+
+/// Mixin to customize scrollbars
+/// Beware, this does not work in all browsers
+/// @author Hugo Giraudel
+/// @param {Length} $size - Horizontal scrollbar's height and vertical scrollbar's width
+/// @param {Color} $foreground-color - Scrollbar's color
+/// @param {Color} $background-color [mix($foreground-color, white, 50%)] - Scrollbar's color
+/// @example scss - Scrollbar styling
+///   @include scrollbars(.5em, slategray);
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white,  50%)) {
+  // For Google Chrome
+  ::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+    border-radius: $size;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: $background-color;
+  }
+
+  // For Internet Explorer
+  iframe,
+  body {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+  }
+}
+
+@include scrollbars(0.4em, slategray);
+
+.markdown-body {
+  position: relative;
+
+  img {
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin-top: 1em;
+    border-bottom: none;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+  }
+
+  h5 {
+    font-size: 1.05rem;
+  }
+}
+
+div[class*="language-"] {
+  position: relative;
+  z-index: 10;
+  background: #1d1f21;
+
+  &::before {
+    position: absolute;
+    top: 0.8em;
+    right: 1em;
+    z-index: 3;
+    color: #fff;
+    font-size: 0.75rem;
+  }
+
+  // 隐藏行号
+  &:not(.line-numbers-mode) .line-numbers-wrapper {
+    display: none;
+  }
+
+  &.line-numbers-mode .highlight-lines .highlighted {
+    position: relative;
+
+    ::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 3;
+      display: block;
+      width: 3.5rem;
+      height: 100%;
+      background-color: rgba(0, 0, 0, .66);
+      content: " ";
+    }
+  }
+
+  &.line-numbers-mode {
+    pre {
+      padding-left: 4.5rem;
+      vertical-align: middle;
+    }
+
+    .line-numbers-wrapper {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: 2;
+      width: 3.5rem;
+      padding: 16px 0;
+      color: hsla(0, 0, 100%, 0.3);
+      line-height: 18.61px;
+      text-align: center;
+      background-color: #282c45;
+      border-right: 1px solid rgba(0, 0, 0, 0.66);
+      border-radius: 6px 0 0 6px;
+
+      .line-number,
+      br {
+        user-select: none;
+      }
+
+      .line-number {
+        position: relative;
+        z-index: 4;
+        font-size: 0.85em;
+      }
+    }
+  }
+
+  & pre {
+    position: relative;
+    z-index: 1;
+    background-color: transparent;
+  }
+
+  .highlight-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 13.6px;
+    line-height: 20.4px;
+    user-select: none;
+
+    .highlighted {
+      background-color: rgba(0, 0, 0, 0.66);
+    }
+  }
+}
+
+$languages: (
+  javascript: 'js',
+  typescript: 'ts',
+  markup: 'html',
+  markdown: 'md',
+  ruby: 'rb',
+  python: 'py',
+  bash: 'sh',
+  shell: 'sh',
+  php: 'php',
+  css: 'css',
+  scss: 'scss',
+  diff: 'diff',
+);
+
+@each $language, $language-text in $languages {
+  div[class~="language-#{$language}"] {
+    &::before {
+      content: $language-text;
+    }
+  }
+}
+
+.highlight-lines {
+  position: relative;
+  top: 0;
+  bottom: 0;
+}
+
+.custom-block .custom-block-title {
+  margin-bottom: .4rem;
+  font-weight: 600;
+}
+
+.custom-block.danger,
+.custom-block.tip,
+.custom-block.warning {
+  margin: 1rem 0;
+  padding: .1rem 1.5rem;
+  border-left-width: .5rem;
+  border-left-style: solid;
+}
+
+.custom-block.tip {
+  background-color: #f3f5f7;
+  border-color: #42b983;
+}
+
+.custom-block.warning {
+  color: #6b5900;
+  background-color: rgba(255, 229, 100, .3);
+  border-color: #e7c000;
+}
+
+.custom-block.warning .custom-block-title {
+  color: #b29400;
+}
+
+.custom-block.warning a {
+  color: #2c3e50;
+}
+
+.custom-block.danger {
+  color: #4d0000;
+  background-color: #ffe6e6;
+  border-color: #c00;
+}
+
+.custom-block.danger .custom-block-title {
+  color: #900;
+}
+
+.custom-block.danger a {
+  color: #2c3e50;
+}

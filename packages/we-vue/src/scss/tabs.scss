@@ -1,0 +1,136 @@
+@import "./base/fn";
+
+$wv-tabs-line-height: 35px;
+$wv-tabs-card-height: 30px;
+
+.wv-tabs {
+  position: relative;
+
+  &__wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 99;
+    overflow: hidden;
+
+    &--page-top {
+      position: fixed;
+    }
+
+    &--content-bottom {
+      top: auto;
+      bottom: 0;
+    }
+
+    &--scrollable {
+      .wv-tab {
+        flex: 0 0 22%;
+      }
+    }
+
+    .wv-tabs__nav {
+      overflow: hidden;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__nav {
+    position: relative;
+    display: flex;
+    background-color: #fff;
+    user-select: none;
+
+    &--line {
+      box-sizing: content-box;
+      height: 100%;
+      padding-bottom: 15px;
+    }
+
+    &--card {
+      box-sizing: border-box;
+      height: $wv-tabs-card-height;
+      margin: 0 15px;
+      border: 1px solid #1aad19;
+      border-radius: 2px;
+
+      .wv-tab {
+        color: #1aad19;
+        line-height: calc(#{$wv-tabs-card-height} - 2px);
+        border-right: 1px solid #1aad19;
+
+        &:last-child {
+          border-right: none;
+        }
+
+        &.wv-tab--active {
+          color: #fff;
+          background-color: #1aad19;
+        }
+      }
+    }
+  }
+
+  &__line {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    z-index: 1;
+    height: 2px;
+    background-color: #1aad19;
+  }
+
+  &--line {
+    padding-top: $wv-tabs-line-height;
+
+    .wv-tabs__wrap {
+      height: $wv-tabs-line-height;
+      border-color: #dedede;
+      border-style: solid;
+      border-width: 1px 0;
+    }
+  }
+
+  &--card {
+    padding-top: $wv-tabs-card-height;
+
+    .wv-tabs__wrap {
+      height: $wv-tabs-card-height;
+    }
+  }
+}
+
+.wv-tab {
+  position: relative;
+  flex: 1;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 0 5px;
+  color: #000;
+  font-size: 14px;
+  line-height: $wv-tabs-line-height;
+  text-align: center;
+  background-color: #fff;
+  cursor: pointer;
+
+  span {
+    display: block;
+  }
+
+  &--active {
+    color: #1aad19;
+  }
+
+  &--disabled {
+    color: gray;
+
+    &:hover {
+      background-color: #fff;
+    }
+  }
+}

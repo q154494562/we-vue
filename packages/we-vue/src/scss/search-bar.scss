@@ -1,0 +1,147 @@
+@import "./base/fn";
+
+.weui-search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  background-color: #efeff4;
+  -webkit-text-size-adjust: 100%;
+
+  &::before {
+    @include setTopLine(#d7d6dc);
+  }
+
+  &::after {
+    @include setBottomLine(#d7d6dc);
+  }
+
+  &.weui-search-bar_focusing {
+    .weui-search-bar__cancel-btn {
+      display: block;
+    }
+
+    .weui-search-bar__label {
+      display: none;
+    }
+  }
+}
+
+.weui-search-bar__form {
+  position: relative;
+  flex: auto;
+  background-color: #efeff4;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    width: 200%;
+    height: 200%;
+    background: #fff;
+    border: 1px solid #e6e6ea;
+    border-radius: 10px;
+    transform: scale(0.5);
+    transform-origin: 0 0;
+    content: "";
+  }
+}
+
+.weui-search-bar__box {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding-right: 30px;
+  padding-left: 30px;
+
+  .weui-search-bar__input {
+    box-sizing: content-box;
+    width: 100%;
+    height: 20/14em;
+    padding: 4px 0;
+    font-size: 14px;
+    line-height: 20/14em;
+    background: transparent;
+    border: 0;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .weui-icon-search {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    margin-top: -14px;
+    line-height: 28px;
+  }
+
+  .weui-icon-clear {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -14px;
+    padding: 0 10px;
+    line-height: 28px;
+  }
+}
+
+.weui-search-bar__label {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  left: 1px;
+  z-index: 2;
+  color: #9b9b9b;
+  text-align: center;
+  background: #fff;
+  border-radius: 3px;
+  transform: scale(1, 1);
+  transform-origin: 0 0 0;
+  opacity: 1;
+
+  span {
+    display: inline-block;
+    font-size: 14px;
+    vertical-align: middle;
+  }
+
+  .weui-icon-search {
+    margin-right: 5px;
+  }
+}
+
+.weui-search-bar__cancel-btn {
+  display: block;
+  margin-left: 10px;
+  color: #09bb07;
+  line-height: 28px;
+  white-space: nowrap;
+}
+
+.weui-search-bar__input:not(:valid) ~ .weui-icon-clear {
+  display: none;
+}
+
+//干掉input[search]默认的clear button
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+.searchbar-result {
+  display: block;
+  margin-top: 0;
+  font-size: 14px;
+  transform: scale(1, 1);
+  transform-origin: 0 0 0;
+  opacity: 1;
+}

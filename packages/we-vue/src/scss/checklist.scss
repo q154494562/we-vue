@@ -1,0 +1,34 @@
+@import "./base/fn";
+@import "./icon";
+
+.weui-check__label {
+  @include setTapColor();
+
+  &:active {
+    background-color: #ececec;
+  }
+}
+
+.weui-cells_checkbox {
+  .weui-cell__hd {
+    padding-right: $weui-cell-inner-gap-h;
+  }
+
+  .weui-icon-checked {
+    &::before {
+      display: block;
+      color: #c9c9c9;
+      font-size: 23px;
+      content: "\EA01";
+    }
+
+    &.checked {
+      color: yellow;
+    }
+
+    &.checked::before {
+      color: currentColor; // 为了实现自定义颜色
+      content: "\EA06";
+    }
+  }
+}

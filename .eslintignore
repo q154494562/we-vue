@@ -1,7 +1,0 @@
-/build/
-/config/
-/dist/
-/es
-/lib
-/*.js
-/test/unit/coverage/

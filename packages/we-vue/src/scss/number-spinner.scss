@@ -1,0 +1,98 @@
+@import "./base/fn";
+
+$border-color: #ddd;
+
+.wv-number-spinner {
+  display: flex;
+  justify-content: space-between;
+  width: auto;
+  height: 1.5em;
+  overflow: hidden;
+  font-size: 13px;
+  border: 1px solid $border-color;
+  border-radius: 3px;
+
+  &:focus {
+    border: 1px solid red;
+  }
+
+  input {
+    padding: 0 0.5em;
+    font-size: 1em;
+    line-height: 1.5;
+    border: none;
+    outline: none;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      appearance: none;
+    }
+
+    &:focus {
+      border-color: #0074d9;
+      outline: none;
+    }
+
+    &[readonly] {
+      background: #f8f8f8;
+    }
+
+    &:disabled {
+      background-color: #f8f8f8;
+      opacity: 0.65;
+    }
+  }
+
+  .spinner-btn {
+    position: relative;
+    width: 1.5em;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    outline: none;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::before,
+    &::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      background-color: #333;
+      transform: translate(-50%, -50%);
+      transition: background-color 0.15s;
+      content: "";
+    }
+
+    &::before {
+      width: 50%;
+      height: 0.0625rem;
+    }
+
+    &::after {
+      width: 0.0625rem;
+      height: 50%;
+    }
+
+    &:disabled {
+      &::before,
+      &::after {
+        background-color: #ddd;
+      }
+    }
+  }
+
+  .btn-minus {
+    border-right: 1px solid $border-color;
+  }
+
+  .btn-plus {
+    border-left: 1px solid $border-color;
+  }
+
+  .btn-minus::after {
+    display: none;
+  }
+}
